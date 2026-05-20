@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_HOST=0.0.0.0
+      - APP_PORT=8000
+      - RELOAD=false
+      - FRONTEND_ORIGINS=http://localhost:5173
+      - DATABASE_URL=sqlite:///./backend/database.db
+      - SECRET_KEY=${SECRET_KEY}
+      - RATE_LIMIT_REQUESTS=120
+      - RATE_LIMIT_WINDOW=60
+    volumes:
+      - ./backend/database.db:/app/backend/database.db
+      - ./backend/logs:/app/logs
